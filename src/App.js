@@ -31,6 +31,7 @@ function App() {
   const [companyTitle, setCompanyTitle] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [coverLetter, setCoverLetter] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Add this line for the loader
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -44,6 +45,8 @@ function App() {
 
   async function generateCoverLetter(resume, jobInfo) {
     try {
+      setIsLoading(true); // Set loading state to true before API call
+
       const response = await fetch(
         "http://127.0.0.1:5000/generate_cover_letter",
         {
@@ -66,6 +69,8 @@ function App() {
       setCoverLetter(data.cover_letter);
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setIsLoading(false); // Set loading state to false after API call is completed
     }
   }
 
@@ -126,7 +131,7 @@ function App() {
       >
         Generate Cover Letter
       </button>
-
+      {isLoading && <div>Loading...</div>} {/* Add this line for the loader */}
       {coverLetter && (
         <div>
           <h3>Cover Letter:</h3>

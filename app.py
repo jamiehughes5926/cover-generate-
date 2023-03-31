@@ -6,7 +6,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
-openai.api_key = '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'
+openai.api_key = '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'
 model_id = 'gpt-3.5-turbo'
 
 def ChatGPT_conversation(conversation):
@@ -30,7 +30,7 @@ def read_job_info(file_path):
 def generate_cover_letter(resume, job_info):
     conversation = [{'role': 'system', 'content': 'You are a cover letter generator.'}]
     
-    conversation.append({'role': 'user', 'content': f"Generate a cover letter using the following resume:\n\n{resume}\n\nAnd the following job information:\n\n{json.dumps(job_info, indent=2)}"})
+    conversation.append({'role': 'user', 'content': f"Generate a cover letter using the following resume:\n\n{resume}\n\nAnd the following job information:\n\n{json.dumps(job_info, indent=2)} make sure to use the information in the resume"})
     conversation = ChatGPT_conversation(conversation)
     cover_letter = conversation[-1]['content'].strip()
 
